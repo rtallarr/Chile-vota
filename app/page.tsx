@@ -53,12 +53,9 @@ export default function Home() {
         {polls.length === 0 && <p className="text-gray-800">No polls yet.</p>}
 
         {polls.map((p) => {
-          console.log("Poll data: ", p);
           const total = Number(p.votes_a) + Number(p.votes_b);
           const yesPct = total ? ((p.votes_a / total) * 100).toFixed(1) : "0";
           const noPct = total ? ((p.votes_b / total) * 100).toFixed(1) : "0";
-
-          //console.log("total: ", total, " yesPct: ", yesPct, " noPct: ", noPct, p.votes_no, p.votes_yes);
 
           return (
             <div
@@ -79,15 +76,10 @@ export default function Home() {
                 ></div>
               </div>
 
-              {/* Optional: show percentages on top */}
               <div className="flex justify-between text-xs text-gray-800 mt-1">
-                <span>👍 {yesPct}%</span>
-                <span>👎 {noPct}%</span>
+                <span>{yesPct}%</span>
+                <span>{noPct}%</span>
               </div>
-
-              {/* <div className="text-sm text-gray-700">
-                👍 Yes: {p.votes_yes} ({yesPct}%) | 👎 No: {p.votes_no} ({noPct}%)
-              </div> */}
 
               {!p.userVoted ? (
                 <div className="flex gap-3 mt-2">
