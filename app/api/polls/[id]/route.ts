@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import { sql } from "@vercel/postgres";
 import { randomUUID } from "crypto";
+import { NextRequest } from "next/server";
 
 export async function POST(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const pollId = params.id;
+  const { id: pollId } = await context.params;
   const { choice } = await req.json();
 
   const cookieStore = await cookies();
