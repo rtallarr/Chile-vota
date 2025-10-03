@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 type Poll = {
   id: string;
   question: string;
-  votes_yes: number;
-  votes_no: number;
+  option_a: string;
+  option_b: string;
+  votes_a: number;
+  votes_b: number;
   userVoted?: boolean;
 };
 
@@ -24,7 +26,7 @@ export default function Home() {
     fetchPolls();
   }, []);
 
-  async function vote(pollId: string, choice: "yes" | "no") {
+  async function vote(pollId: string, choice: string) {
     setStatus("");
     const res = await fetch(`/api/polls/${pollId}`, {
       method: "POST",
@@ -52,9 +54,9 @@ export default function Home() {
 
         {polls.map((p) => {
           console.log("Poll data: ", p);
-          const total = Number(p.votes_yes) + Number(p.votes_no);
-          const yesPct = total ? ((p.votes_yes / total) * 100).toFixed(1) : "0";
-          const noPct = total ? ((p.votes_no / total) * 100).toFixed(1) : "0";
+          const total = Number(p.votes_a) + Number(p.votes_b);
+          const yesPct = total ? ((p.votes_a / total) * 100).toFixed(1) : "0";
+          const noPct = total ? ((p.votes_b / total) * 100).toFixed(1) : "0";
 
           //console.log("total: ", total, " yesPct: ", yesPct, " noPct: ", noPct, p.votes_no, p.votes_yes);
 
@@ -68,11 +70,11 @@ export default function Home() {
               {/* Results bar */}
               <div className="flex w-full h-4 bg-gray-300 rounded overflow-hidden">
                 <div
-                  style={{ flexGrow: p.votes_yes }}
+                  style={{ flexGrow: p.votes_a }}
                   className="bg-green-600"
                 ></div>
                 <div
-                  style={{ flexGrow: p.votes_no }}
+                  style={{ flexGrow: p.votes_b }}
                   className="bg-red-600"
                 ></div>
               </div>
@@ -90,16 +92,16 @@ export default function Home() {
               {!p.userVoted ? (
                 <div className="flex gap-3 mt-2">
                   <button
-                    onClick={() => vote(p.id, "yes")}
+                    onClick={() => vote(p.id, p.option_a)}
                     className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
                   >
-                    Vote Yes
+                    {p.option_a}
                   </button>
                   <button
-                    onClick={() => vote(p.id, "no")}
+                    onClick={() => vote(p.id, p.option_b)}
                     className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                   >
-                    Vote No
+                    {p.option_b}
                   </button>
                 </div>
               ) : (

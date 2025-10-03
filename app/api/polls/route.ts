@@ -19,9 +19,9 @@ export async function GET() {
   }
 
   const { rows: polls } = await sql`
-    SELECT id, question,
-      (SELECT COUNT(*) FROM votes WHERE poll_id = polls.id AND choice = 'yes') AS votes_yes,
-      (SELECT COUNT(*) FROM votes WHERE poll_id = polls.id AND choice = 'no') AS votes_no,
+    SELECT id, question, option_a, option_b,
+      (SELECT COUNT(*) FROM votes WHERE poll_id = polls.id AND choice = option_a) AS votes_a,
+      (SELECT COUNT(*) FROM votes WHERE poll_id = polls.id AND choice = option_b) AS votes_b,
       EXISTS (
         SELECT 1 FROM votes WHERE poll_id = polls.id AND voter_id = ${voterId}
       ) AS "userVoted"
