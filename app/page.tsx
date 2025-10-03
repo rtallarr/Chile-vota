@@ -34,12 +34,12 @@ export default function Home() {
     });
 
     if (res.status === 409) {
-      toast.error("⚠️ Ya votaste en esta encuesta");
+      toast.error("Ya votaste en esta encuesta");
     } else if (res.ok) {
-      toast.success("✅ Voto registrado");
+      toast.success("Voto registrado");
       fetchPolls();
     } else {
-      toast.error("❌ Error al registrar voto");
+      toast.error("Error al registrar voto");
     }
   }
 
