@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   keywords: ["chile", "vota", "si/no", "encuesta"],
   authors: [{ name: "Rodrigo Tallar", url: "https://www.tallar.cl"}],
   creator: "Rodrigo Tallar",
-  themeColor: "#1e293b",
 };
 
 export default function RootLayout({
